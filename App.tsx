@@ -94,8 +94,7 @@ export default function App() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-          <img 
-            src={paintingUrl} 
+          <<img src="/Dummy_Bild.jpg" alt="Bild" />
             onError={handleImageError}
             alt="Bildanalyse" 
             className="max-w-full max-h-full object-contain rounded-sm shadow-2xl animate-in zoom-in-95 duration-500"
