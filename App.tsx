@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { STEPS, SOLUTION_TEXT, INSTRUCTION_HINT, AMPEL_FEEDBACK } from './constants';
-import { Infographic } from './components/Infographic';
+import Infographic from './components/Infographic';
 
 export default function App() {
   const [activeStep, setActiveStep] = useState(0);
