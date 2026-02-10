@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { STEPS, SOLUTION_TEXT, INSTRUCTION_HINT, AMPEL_FEEDBACK } from "./constants";
-import Infographic from "./components/Infographic";
 
 export default function App() {
   const [activeStep, setActiveStep] = useState(0);
@@ -14,10 +13,9 @@ export default function App() {
     window.print();
   };
 
-  const currentStep = STEPS[activeStep];
+  const currentStep: any = STEPS[activeStep];
 
-  // ✅ WICHTIG: Auf Cloudflare Pages muss das i.d.R. absolut sein:
-  // Lege das Bild nach public/Dummy_Bild.jpg (Ordner kannst du anlegen)
+  // ✅ Cloudflare Pages: Bild aus /public laden (public/Dummy_Bild.jpg)
   const paintingUrl = "/Dummy_Bild.jpg";
 
   const backupUrl =
@@ -29,9 +27,7 @@ export default function App() {
 
   // Reset Ampel-Wahl beim Navigieren
   useEffect(() => {
-    if (activeStep !== 4) {
-      setAmpelChoice(null);
-    }
+    if (activeStep !== 4) setAmpelChoice(null);
   }, [activeStep]);
 
   return (
@@ -57,9 +53,9 @@ export default function App() {
 
         {/* Step Icons */}
         <div className="flex items-center gap-1.5 md:gap-4 bg-slate-100 p-1.5 md:p-2 rounded-2xl border border-slate-200">
-          {STEPS.map((step, idx) => (
+          {STEPS.map((step: any, idx: number) => (
             <button
-              key={step.number}
+              key={step.number ?? idx}
               onClick={() => {
                 setActiveStep(idx);
                 setShowHints(false);
@@ -100,7 +96,7 @@ export default function App() {
         </p>
       </div>
 
-      {/* Image Modal */}
+      {/* Image Modal (ZOOMBAR) */}
       {isModalOpen && (
         <div
           className="fixed inset-0 z-[100] bg-black/98 flex items-center justify-center p-2 animate-in fade-in duration-300"
@@ -116,18 +112,13 @@ export default function App() {
             </svg>
           </button>
 
-          {/* ✅ Fix: korrektes <img> */}
-          <img
-            src={paintingUrl}
-            onError={handleImageError}
-            alt="Bildanalyse"
-            className="max-w-full max-h-full object-contain rounded-sm shadow-2xl animate-in zoom-in-95 duration-500"
-            onClick={(e) => e.stopPropagation()}
-          />
+          <div className="w-full max-w-[1400px]" onClick={(e) => e.stopPropagation()}>
+            <ZoomableImage src={paintingUrl} alt="Bildanalyse" onError={handleImageError} />
+          </div>
         </div>
       )}
 
-      {/* Solution Modal */}
+      {/* Solution Modal (kurzer Text in Webansicht) */}
       {showSolution && (
         <div
           className="fixed inset-0 z-[100] bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-6 animate-in fade-in duration-300"
@@ -168,7 +159,6 @@ export default function App() {
                 className="relative group cursor-pointer flex-grow min-h-[300px] md:min-h-[400px]"
                 onClick={() => setIsModalOpen(true)}
               >
-                {/* ✅ Fix: nutzt jetzt paintingUrl mit / */}
                 <img
                   src={paintingUrl}
                   onError={handleImageError}
@@ -192,12 +182,8 @@ export default function App() {
 
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="bg-black/40 backdrop-blur-xl p-6 rounded-3xl border border-white/10 shadow-2xl">
-                    <h2 className="text-2xl md:text-4xl font-black tracking-tighter uppercase leading-none mb-1">
-                      {currentStep.title}
-                    </h2>
-                    <p className="text-indigo-400 text-sm md:text-lg font-black italic tracking-tight uppercase">
-                      {currentStep.subtitle}
-                    </p>
+                    <h2 className="text-2xl md:text-4xl font-black tracking-tighter uppercase leading-none mb-1">{currentStep.title}</h2>
+                    <p className="text-indigo-400 text-sm md:text-lg font-black italic tracking-tight uppercase">{currentStep.subtitle}</p>
                   </div>
                 </div>
               </div>
@@ -213,7 +199,7 @@ export default function App() {
                 </p>
 
                 {currentStep.contextText && (
-                  <div className="bg-slate-900 text-white p-8 md:p-10 rounded-[2.5rem] border-l-[12px] border-indigo-500 shadow-xl animate-in fade-in slide-in-from-bottom duration-500">
+                  <div className="bg-slate-900 text-white p-8 md:p-10 rounded-[2.5rem] border-l-[12px] border-indigo-500 shadow-xl">
                     <h4 className="text-indigo-400 font-black uppercase text-xs tracking-[0.4em] mb-4">Hintergrund-Wissen</h4>
                     <p className="text-lg md:text-2xl font-bold leading-relaxed italic">{currentStep.contextText}</p>
                   </div>
@@ -241,7 +227,7 @@ export default function App() {
                 <div className="flex flex-col gap-5 h-full">
                   {/* Interaktive Ampel nur in Schritt 5 */}
                   {activeStep === 4 && (
-                    <div className="bg-slate-900 p-8 rounded-[2.2rem] shadow-2xl border-4 border-slate-800 mb-4 animate-in slide-in-from-right duration-500">
+                    <div className="bg-slate-900 p-8 rounded-[2.2rem] shadow-2xl border-4 border-slate-800 mb-4">
                       <h4 className="text-white font-black uppercase text-center text-xs tracking-widest mb-6">
                         Wähle die richtige Ampelfarbe:
                       </h4>
@@ -278,7 +264,7 @@ export default function App() {
 
                       {ampelChoice && (
                         <div
-                          className={`mt-8 p-6 rounded-2xl border-2 font-bold text-center animate-in zoom-in-95 duration-300 ${
+                          className={`mt-8 p-6 rounded-2xl border-2 font-bold text-center ${
                             ampelChoice === "yellow"
                               ? "bg-yellow-50 border-yellow-400 text-yellow-900"
                               : "bg-slate-800 border-slate-700 text-slate-300"
@@ -316,7 +302,7 @@ export default function App() {
                   </button>
 
                   {showHints && (
-                    <div className="bg-amber-50 p-6 rounded-[2.2rem] border-4 border-amber-200 shadow-inner animate-in slide-in-from-top-4 duration-300">
+                    <div className="bg-amber-50 p-6 rounded-[2.2rem] border-4 border-amber-200 shadow-inner">
                       <div className="space-y-3">
                         {currentStep.hints.map((hint: string, i: number) => (
                           <div
@@ -353,7 +339,7 @@ export default function App() {
                   </button>
 
                   {showWritingHelp && (
-                    <div className="bg-indigo-50 p-6 rounded-[2.2rem] border-4 border-indigo-100 shadow-inner animate-in slide-in-from-top-4 duration-300">
+                    <div className="bg-indigo-50 p-6 rounded-[2.2rem] border-4 border-indigo-100 shadow-inner">
                       <div className="space-y-3">
                         {currentStep.sentenceStarters.map((s: string, i: number) => (
                           <div
@@ -393,7 +379,7 @@ export default function App() {
                       onClick={() => setShowSolution(true)}
                       className="bg-blue-600/10 hover:bg-blue-600 text-blue-700 hover:text-white transition-all text-[11px] font-black uppercase tracking-[0.3em] px-8 py-3 rounded-full border-2 border-blue-200 active:scale-90"
                     >
-                      Gesamt-Lösung
+                      Gesamt-Lösung (kurz)
                     </button>
                   )}
                 </div>
@@ -418,7 +404,7 @@ export default function App() {
                     onClick={handlePrint}
                     className="flex-1 min-w-[140px] max-w-[200px] flex items-center justify-center gap-4 bg-green-600 text-white py-5 rounded-[2rem] font-black shadow-2xl hover:bg-green-700 active:scale-95 border-b-8 border-green-800 uppercase tracking-widest text-[10px] md:text-xs"
                   >
-                    Drucken
+                    Drucken (Gesamtlösung)
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path
                         strokeLinecap="round"
@@ -435,18 +421,315 @@ export default function App() {
         </div>
       </main>
 
-      {/* Druck-Ansicht */}
-      <div className="hidden print:block absolute inset-0">
-        <Infographic />
+      {/* ✅ Druck-Ansicht: komplette Gesamtlösung (alle Schritte + Ampel + Lösungstext) */}
+      <div className="hidden print:block">
+        <PrintAllSteps />
       </div>
 
       <style>{`
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
         @media print {
           .no-print { display: none !important; }
+
+          .print-root {
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            color: #0f172a;
+            padding: 18mm 14mm;
+          }
+
+          .print-header h1 { font-size: 18pt; margin: 0 0 6mm 0; }
+          .print-header p { margin: 0 0 8mm 0; font-size: 10pt; color: #334155; }
+
+          .print-image img {
+            width: 100%;
+            max-height: 90mm;
+            object-fit: contain;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+          }
+
+          .print-section { margin: 0 0 8mm 0; }
+          .print-step h2 { font-size: 14pt; margin: 0 0 2mm 0; }
+
+          .print-subtitle {
+            margin: 0 0 4mm 0;
+            font-size: 10pt;
+            color: #475569;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+          }
+
+          .print-desc { margin: 0 0 4mm 0; font-size: 11pt; }
+
+          .print-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 5mm 6mm;
+            margin: 0 0 5mm 0;
+          }
+
+          .print-box h3 { margin: 0 0 3mm 0; font-size: 11pt; }
+          .print-box p, .print-box li { font-size: 10.5pt; line-height: 1.35; }
+          .print-box ol, .print-box ul { margin: 0 0 0 5mm; padding: 0; }
+
+          .page-break { page-break-after: always; }
+
+          .ampel-grid { display: grid; grid-template-columns: 1fr; gap: 4mm; }
+          .ampel-item { border: 1px solid #e2e8f0; border-radius: 10px; padding: 5mm 6mm; }
+          .ampel-item h4 { margin: 0 0 2mm 0; font-size: 11pt; }
+          .ampel-item p { margin: 0; font-size: 10.5pt; }
         }
       `}</style>
+    </div>
+  );
+}
+
+function PrintAllSteps() {
+  return (
+    <div className="print-root">
+      <header className="print-header print-section">
+        <h1>Bildanalyse – Gesamtlösung (Schritte 1–5)</h1>
+        <p>{INSTRUCTION_HINT}</p>
+      </header>
+
+      <section className="print-image print-section">
+        <h2 style={{ fontSize: "12pt", marginBottom: "3mm" }}>Bild</h2>
+        <img
+          src="/Dummy_Bild.jpg"
+          alt="Bildquelle"
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src =
+              "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Eug%C3%A8ne_Delacroix_-_Le_28_Juillet._La_Libert%C3%A9_guidant_le_peuple.jpg/1200px-Eug%C3%A8ne_Delacroix_-_Le_28_Juillet._La_Libert%C3%A9_guidant_le_peuple.jpg";
+          }}
+        />
+      </section>
+
+      {STEPS.map((step: any, idx: number) => (
+        <section key={step.number ?? idx} className="print-step print-section">
+          <h2>
+            Schritt {step.number}: {step.title}
+          </h2>
+          {step.subtitle ? <p className="print-subtitle">{step.subtitle}</p> : null}
+          {step.description ? <p className="print-desc">{step.description}</p> : null}
+
+          {step.contextText ? (
+            <div className="print-box">
+              <h3>Hintergrund-Wissen</h3>
+              <p>{step.contextText}</p>
+            </div>
+          ) : null}
+
+          {Array.isArray(step.points) && step.points.length > 0 ? (
+            <div className="print-box">
+              <h3>Aufgaben</h3>
+              <ol>
+                {step.points.map((p: string, i: number) => (
+                  <li key={i}>{p}</li>
+                ))}
+              </ol>
+            </div>
+          ) : null}
+
+          {Array.isArray(step.hints) && step.hints.length > 0 ? (
+            <div className="print-box">
+              <h3>Detektiv-Lupe (Hinweise)</h3>
+              <ul>
+                {step.hints.map((h: string, i: number) => (
+                  <li key={i}>{h}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          {Array.isArray(step.sentenceStarters) && step.sentenceStarters.length > 0 ? (
+            <div className="print-box">
+              <h3>Schreib-Hilfe (Satzstarter)</h3>
+              <ul>
+                {step.sentenceStarters.map((s: string, i: number) => (
+                  <li key={i}>"{s}"</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          {idx < STEPS.length - 1 ? <div className="page-break" /> : null}
+        </section>
+      ))}
+
+      <div className="page-break" />
+
+      <section className="print-section">
+        <h2 style={{ fontSize: "14pt", marginBottom: "3mm" }}>Gesamtlösung</h2>
+
+        <div className="print-box">
+          <h3>Lösungstext</h3>
+          <p>{SOLUTION_TEXT}</p>
+        </div>
+
+        <div className="print-box">
+          <h3>Ampel – Begründungen</h3>
+          <div className="ampel-grid">
+            <div className="ampel-item">
+              <h4>Rot</h4>
+              <p>{AMPEL_FEEDBACK.red}</p>
+            </div>
+            <div className="ampel-item">
+              <h4>Gelb</h4>
+              <p>{AMPEL_FEEDBACK.yellow}</p>
+            </div>
+            <div className="ampel-item">
+              <h4>Grün</h4>
+              <p>{AMPEL_FEEDBACK.green}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* =========================
+   Zoom-Image (Variante 1)
+   - Mausrad/Trackpad: Zoom
+   - Ziehen: Verschieben (ab > 100%)
+   ========================= */
+
+function clamp(n: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function ZoomableImage({
+  src,
+  alt,
+  onError,
+}: {
+  src: string;
+  alt: string;
+  onError?: (e: React.SyntheticEvent<HTMLImageElement, Event>) => void;
+}) {
+  const [scale, setScale] = useState(1);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const [start, setStart] = useState({ x: 0, y: 0 });
+  const [startPos, setStartPos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    // Reset, wenn Modal neu auf geht / Bildquelle wechselt
+    setScale(1);
+    setPos({ x: 0, y: 0 });
+    setDragging(false);
+  }, [src]);
+
+  const zoom = (delta: number) => {
+    setScale((s) => clamp(Number((s + delta).toFixed(3)), 1, 6));
+  };
+
+  const onWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.15 : 0.15;
+    zoom(delta);
+  };
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    if (scale <= 1) return;
+    setDragging(true);
+    setStart({ x: e.clientX, y: e.clientY });
+    setStartPos(pos);
+  };
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!dragging) return;
+    const dx = e.clientX - start.x;
+    const dy = e.clientY - start.y;
+    setPos({ x: startPos.x + dx, y: startPos.y + dy });
+  };
+
+  const onMouseUp = () => setDragging(false);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    if (scale <= 1) return;
+    if (e.touches.length !== 1) return;
+    setDragging(true);
+    setStart({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+    setStartPos(pos);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (!dragging) return;
+    if (e.touches.length !== 1) return;
+    const dx = e.touches[0].clientX - start.x;
+    const dy = e.touches[0].clientY - start.y;
+    setPos({ x: startPos.x + dx, y: startPos.y + dy });
+  };
+
+  const onTouchEnd = () => setDragging(false);
+
+  const reset = () => {
+    setScale(1);
+    setPos({ x: 0, y: 0 });
+  };
+
+  return (
+    <div className="relative w-full select-none">
+      {/* Controls */}
+      <div className="absolute top-4 left-4 z-[120] flex gap-2">
+        <button
+          className="bg-white/20 hover:bg-white/30 text-white font-black px-4 py-2 rounded-full backdrop-blur"
+          onClick={() => zoom(0.25)}
+          aria-label="Reinzoomen"
+        >
+          +
+        </button>
+        <button
+          className="bg-white/20 hover:bg-white/30 text-white font-black px-4 py-2 rounded-full backdrop-blur"
+          onClick={() => zoom(-0.25)}
+          aria-label="Rauszoomen"
+        >
+          −
+        </button>
+        <button
+          className="bg-white/20 hover:bg-white/30 text-white font-black px-4 py-2 rounded-full backdrop-blur"
+          onClick={reset}
+          aria-label="Zurücksetzen"
+        >
+          Reset
+        </button>
+        <div className="bg-white/15 text-white px-3 py-2 rounded-full backdrop-blur text-sm font-black">
+          {Math.round(scale * 100)}%
+        </div>
+      </div>
+
+      {/* Zoom surface */}
+      <div
+        className="w-full h-[80vh] md:h-[90vh] overflow-hidden cursor-grab active:cursor-grabbing"
+        onWheel={onWheel}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
+        onMouseLeave={onMouseUp}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        <img
+          src={src}
+          alt={alt}
+          onError={onError}
+          draggable={false}
+          className="max-w-none"
+          style={{
+            transform: `translate(${pos.x}px, ${pos.y}px) scale(${scale})`,
+            transformOrigin: "center center",
+          }}
+        />
+      </div>
+
+      <div className="absolute bottom-4 left-4 z-[120] bg-black/40 text-white text-xs font-bold px-3 py-2 rounded-xl backdrop-blur">
+        Scroll/Mausrad = Zoom · Ziehen = Verschieben (erst ab &gt; 100%)
+      </div>
     </div>
   );
 }
