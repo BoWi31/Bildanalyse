@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { STEPS, SOLUTION_TEXT, INSTRUCTION_HINT, AMPEL_FEEDBACK } from "./constants";
 
 export default function App() {
@@ -9,9 +9,7 @@ export default function App() {
   const [showSolution, setShowSolution] = useState(false);
   const [ampelChoice, setAmpelChoice] = useState<null | "red" | "yellow" | "green">(null);
 
-  const handlePrint = () => {
-    window.print();
-  };
+  const handlePrint = () => window.print();
 
   const currentStep: any = STEPS[activeStep];
 
@@ -25,7 +23,6 @@ export default function App() {
     e.currentTarget.src = backupUrl;
   };
 
-  // Reset Ampel-Wahl beim Navigieren
   useEffect(() => {
     if (activeStep !== 4) setAmpelChoice(null);
   }, [activeStep]);
@@ -96,7 +93,7 @@ export default function App() {
         </p>
       </div>
 
-      {/* Image Modal (ZOOMBAR) */}
+      {/* Image Modal (Original + optional Lupe) */}
       {isModalOpen && (
         <div
           className="fixed inset-0 z-[100] bg-black/98 flex items-center justify-center p-2 animate-in fade-in duration-300"
@@ -112,8 +109,16 @@ export default function App() {
             </svg>
           </button>
 
-          <div className="w-full max-w-[1400px]" onClick={(e) => e.stopPropagation()}>
-            <ZoomableImage src={paintingUrl} alt="Bildanalyse" onError={handleImageError} />
+          <div className="w-full max-w-[1400px] px-2" onClick={(e) => e.stopPropagation()}>
+            <MagnifierImage
+              src={paintingUrl}
+              alt="Bildanalyse"
+              onError={handleImageError}
+              fallbackSrc={backupUrl}
+              // Feintuning:
+              lensSize={220}
+              zoom={2.6}
+            />
           </div>
         </div>
       )}
@@ -427,9 +432,6 @@ export default function App() {
       </div>
 
       <style>{`
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-
         @media print {
           .no-print { display: none !important; }
 
@@ -592,143 +594,202 @@ function PrintAllSteps() {
 }
 
 /* =========================
-   Zoom-Image (Variante 1)
-   - Mausrad/Trackpad: Zoom
-   - Ziehen: Verschieben (ab > 100%)
+   Magnifier (Originalbild + Lupe)
+   - Bild bleibt "normal" (contain)
+   - Optional Lupe aktivieren: vergrößert Bereich unter Cursor/Finger
    ========================= */
 
 function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
 }
 
-function ZoomableImage({
+function MagnifierImage({
   src,
   alt,
   onError,
+  fallbackSrc,
+  lensSize = 220,
+  zoom = 2.6,
 }: {
   src: string;
   alt: string;
   onError?: (e: React.SyntheticEvent<HTMLImageElement, Event>) => void;
+  fallbackSrc?: string;
+  lensSize?: number; // px
+  zoom?: number; // 2.0 - 4.0 sinnvoll
 }) {
-  const [scale, setScale] = useState(1);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [dragging, setDragging] = useState(false);
-  const [start, setStart] = useState({ x: 0, y: 0 });
-  const [startPos, setStartPos] = useState({ x: 0, y: 0 });
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+
+  const [lensOn, setLensOn] = useState(false);
+  const [inside, setInside] = useState(false);
+
+  // Position relativ zum Bild (0..1)
+  const [rel, setRel] = useState({ x: 0.5, y: 0.5 });
+
+  // Bild-Rechteck im Layout (für Background-Calc)
+  const [rect, setRect] = useState<{ left: number; top: number; width: number; height: number } | null>(null);
+
+  const updateRect = () => {
+    const el = imgRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    setRect({ left: r.left, top: r.top, width: r.width, height: r.height });
+  };
 
   useEffect(() => {
-    // Reset, wenn Modal neu auf geht / Bildquelle wechselt
-    setScale(1);
-    setPos({ x: 0, y: 0 });
-    setDragging(false);
-  }, [src]);
+    updateRect();
+    const onResize = () => updateRect();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
-  const zoom = (delta: number) => {
-    setScale((s) => clamp(Number((s + delta).toFixed(3)), 1, 6));
-  };
-
-  const onWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    const delta = e.deltaY > 0 ? -0.15 : 0.15;
-    zoom(delta);
-  };
-
-  const onMouseDown = (e: React.MouseEvent) => {
-    if (scale <= 1) return;
-    setDragging(true);
-    setStart({ x: e.clientX, y: e.clientY });
-    setStartPos(pos);
+  const setFromClient = (clientX: number, clientY: number) => {
+    const r = rect;
+    if (!r) return;
+    const x = (clientX - r.left) / r.width;
+    const y = (clientY - r.top) / r.height;
+    setRel({ x: clamp(x, 0, 1), y: clamp(y, 0, 1) });
   };
 
   const onMouseMove = (e: React.MouseEvent) => {
-    if (!dragging) return;
-    const dx = e.clientX - start.x;
-    const dy = e.clientY - start.y;
-    setPos({ x: startPos.x + dx, y: startPos.y + dy });
-  };
-
-  const onMouseUp = () => setDragging(false);
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    if (scale <= 1) return;
-    if (e.touches.length !== 1) return;
-    setDragging(true);
-    setStart({ x: e.touches[0].clientX, y: e.touches[0].clientY });
-    setStartPos(pos);
+    if (!lensOn) return;
+    setFromClient(e.clientX, e.clientY);
   };
 
   const onTouchMove = (e: React.TouchEvent) => {
-    if (!dragging) return;
-    if (e.touches.length !== 1) return;
-    const dx = e.touches[0].clientX - start.x;
-    const dy = e.touches[0].clientY - start.y;
-    setPos({ x: startPos.x + dx, y: startPos.y + dy });
+    if (!lensOn) return;
+    if (e.touches.length < 1) return;
+    const t = e.touches[0];
+    setFromClient(t.clientX, t.clientY);
   };
 
-  const onTouchEnd = () => setDragging(false);
+  // Lens-Position in px innerhalb des Bildes
+  const lensLeftPx = rect ? rel.x * rect.width : 0;
+  const lensTopPx = rect ? rel.y * rect.height : 0;
 
-  const reset = () => {
-    setScale(1);
-    setPos({ x: 0, y: 0 });
-  };
+  // Hintergrundgröße (auf gerendertem Bild basierend, *zoom)
+  const bgSize = rect ? `${rect.width * zoom}px ${rect.height * zoom}px` : "0 0";
+
+  // Hintergrundposition: so, dass die Mitte der Lupe den vergrößerten Punkt zeigt
+  const bgPos = rect
+    ? `${-(rel.x * rect.width * zoom - lensSize / 2)}px ${-(rel.y * rect.height * zoom - lensSize / 2)}px`
+    : "0 0";
 
   return (
-    <div className="relative w-full select-none">
+    <div className="relative w-full">
       {/* Controls */}
-      <div className="absolute top-4 left-4 z-[120] flex gap-2">
+      <div className="absolute top-3 left-3 z-[120] flex flex-wrap gap-2">
         <button
-          className="bg-white/20 hover:bg-white/30 text-white font-black px-4 py-2 rounded-full backdrop-blur"
-          onClick={() => zoom(0.25)}
-          aria-label="Reinzoomen"
+          className={`px-4 py-2 rounded-full font-black uppercase tracking-widest text-xs md:text-sm backdrop-blur border ${
+            lensOn ? "bg-amber-400 text-amber-950 border-amber-300" : "bg-white/15 text-white border-white/20 hover:bg-white/25"
+          }`}
+          onClick={() => {
+            setLensOn((v) => !v);
+            // beim Einschalten Rect neu messen (falls Font/Scale etc)
+            setTimeout(updateRect, 0);
+          }}
         >
-          +
+          {lensOn ? "Lupe: AN" : "Lupe: AUS"}
         </button>
-        <button
-          className="bg-white/20 hover:bg-white/30 text-white font-black px-4 py-2 rounded-full backdrop-blur"
-          onClick={() => zoom(-0.25)}
-          aria-label="Rauszoomen"
-        >
-          −
-        </button>
-        <button
-          className="bg-white/20 hover:bg-white/30 text-white font-black px-4 py-2 rounded-full backdrop-blur"
-          onClick={reset}
-          aria-label="Zurücksetzen"
-        >
-          Reset
-        </button>
-        <div className="bg-white/15 text-white px-3 py-2 rounded-full backdrop-blur text-sm font-black">
-          {Math.round(scale * 100)}%
+
+        <div className="px-3 py-2 rounded-full text-white text-xs md:text-sm font-black bg-white/10 border border-white/15 backdrop-blur">
+          Tipp: Lupe an → über Details fahren
         </div>
       </div>
 
-      {/* Zoom surface */}
+      {/* Image wrapper (fixed height for modal) */}
       <div
-        className="w-full h-[80vh] md:h-[90vh] overflow-hidden cursor-grab active:cursor-grabbing"
-        onWheel={onWheel}
-        onMouseDown={onMouseDown}
+        ref={wrapRef}
+        className="relative w-full h-[80vh] md:h-[90vh] flex items-center justify-center"
+        onMouseEnter={() => lensOn && setInside(true)}
+        onMouseLeave={() => setInside(false)}
         onMouseMove={onMouseMove}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseUp}
-        onTouchStart={onTouchStart}
+        onTouchStart={() => lensOn && setInside(true)}
+        onTouchEnd={() => setInside(false)}
         onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
       >
         <img
+          ref={imgRef}
           src={src}
           alt={alt}
-          onError={onError}
-          draggable={false}
-          className="max-w-none"
-          style={{
-            transform: `translate(${pos.x}px, ${pos.y}px) scale(${scale})`,
-            transformOrigin: "center center",
+          onError={(e) => {
+            // 1) erst normale onError-Logik
+            onError?.(e);
+            // 2) optional: wenn du lieber fix fallback willst
+            if (fallbackSrc) {
+              (e.currentTarget as HTMLImageElement).src = fallbackSrc;
+            }
           }}
+          onLoad={() => updateRect()}
+          className="max-w-full max-h-full object-contain rounded-sm shadow-2xl"
+          draggable={false}
         />
+
+        {/* Lens */}
+        {lensOn && inside && rect && (
+          <div
+            className="pointer-events-none absolute"
+            style={{
+              // Position relativ zum Bild: wir brauchen das Bild als Bezug -> deshalb setzen wir die Lupe über das Bild,
+              // aber wir positionieren innerhalb des Wrappers anhand von imgRect.
+              left: 0,
+              top: 0,
+              width: rect.width,
+              height: rect.height,
+            }}
+          >
+            {/* Kreis-Lupe */}
+            <div
+              style={{
+                position: "absolute",
+                left: `calc(${lensLeftPx}px - ${lensSize / 2}px)`,
+                top: `calc(${lensTopPx}px - ${lensSize / 2}px)`,
+                width: `${lensSize}px`,
+                height: `${lensSize}px`,
+                borderRadius: "9999px",
+                border: "4px solid rgba(255,255,255,0.85)",
+                boxShadow: "0 18px 60px rgba(0,0,0,0.6)",
+                backgroundImage: `url(${src})`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: bgSize,
+                backgroundPosition: bgPos,
+                overflow: "hidden",
+                // leichter Glas-Effekt
+                backdropFilter: "blur(0.5px)",
+              }}
+            />
+
+            {/* Fadenkreuz */}
+            <div
+              style={{
+                position: "absolute",
+                left: `calc(${lensLeftPx}px - 10px)`,
+                top: `calc(${lensTopPx}px - 1px)`,
+                width: "20px",
+                height: "2px",
+                background: "rgba(255,255,255,0.7)",
+                filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.6))",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                left: `calc(${lensLeftPx}px - 1px)`,
+                top: `calc(${lensTopPx}px - 10px)`,
+                width: "2px",
+                height: "20px",
+                background: "rgba(255,255,255,0.7)",
+                filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.6))",
+              }}
+            />
+          </div>
+        )}
       </div>
 
-      <div className="absolute bottom-4 left-4 z-[120] bg-black/40 text-white text-xs font-bold px-3 py-2 rounded-xl backdrop-blur">
-        Scroll/Mausrad = Zoom · Ziehen = Verschieben (erst ab &gt; 100%)
+      {/* Hinweis unten */}
+      <div className="absolute bottom-3 left-3 z-[120] bg-black/40 text-white text-xs font-bold px-3 py-2 rounded-xl backdrop-blur border border-white/10">
+        Bild bleibt original · Lupe optional (ideal für Details)
       </div>
     </div>
   );
