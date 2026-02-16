@@ -7,7 +7,7 @@ export const Infographic: React.FC = () => {
   return (
     <div className="print-area w-[210mm] h-[297mm] bg-white mx-auto overflow-hidden flex flex-col p-[12mm] text-indigo-900 border-[12px] border-slate-100 print:border-none">
       
-      {/* Header mit Illustration-Stil wie im Screenshot */}
+      {/* Header mit Illustration-Stil */}
       <header className="flex justify-between items-start mb-8">
         <div className="w-2/3">
           <h1 className="text-[42px] font-black tracking-tighter leading-none mb-4">
@@ -29,7 +29,7 @@ export const Infographic: React.FC = () => {
         </div>
       </header>
 
-      {/* Main Table-like Structure */}
+      {/* Main Table Structure */}
       <main className="flex-grow flex flex-col border-[2px] border-indigo-900">
         {STEPS.map((step) => (
           <StepBox key={step.number} step={step} />
