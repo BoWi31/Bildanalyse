@@ -25,10 +25,10 @@ export const STEPS: StepData[] = [
       'Die Farben wirken eher...'
     ],
     hints: [
-      'Schau ganz unten: Da liegen tote Männer.',
-      'Die Frau in der Mitte trägt ein helles Kleid und eine rote Mütze.',
-      'Im Hintergrund erkennt man die Türme von Notre-Dame.',
-      'Man sieht reiche Bürger mit Zylindern und arme Arbeiter.'
+      'Schau ganz unten: Da liegen gefallene Soldaten und Aufständische.',
+      'Die Frau in der Mitte trägt eine rote Mütze (Phrygische Mütze) – ein Symbol für Freiheit.',
+      'Im Hintergrund erkennt man klein die Türme von Notre-Dame in Paris.',
+      'Man sieht einen Jungen mit Pistolen, einen Mann im Zylinder und einen Arbeiter.'
     ]
   },
   {
@@ -52,9 +52,9 @@ export const STEPS: StepData[] = [
       'Das Bild wirkt auf mich sehr...'
     ],
     hints: [
-      'Die Frau ist wahrscheinlich kein echter Mensch, sondern ein Symbol (Freiheit).',
-      'Die Flagge steht für die Nation Frankreich.',
-      'Das Zusammenstehen zeigt Einigkeit gegen einen gemeinsamen Feind.'
+      'Die Frau ist eine "Allegorie" (ein personifiziertes Symbol) für die Freiheit.',
+      'Die Trikolore (Blau-Weiß-Rot) war damals als Flagge eigentlich verboten.',
+      'Dass Arm und Reich gemeinsam kämpfen, ist eine starke politische Botschaft.'
     ]
   },
   {
@@ -63,13 +63,13 @@ export const STEPS: StepData[] = [
     title: 'Historischer Kontext',
     subtitle: 'Was passiert auf dem Bild?',
     description: 'Verbinde das Bild mit den geschichtlichen Fakten.',
-    contextText: 'Im Juli 1830 gab es in Paris einen Aufstand (Juli-Revolution). Das Volk kämpfte gegen König Karl X., der die Pressefreiheit einschränkte. Das Bild zeigt den Moment, in dem die Menschen die Barrikaden stürmen.',
+    contextText: 'Vom 27. bis 29. Juli 1830 ereigneten sich in Paris die "Drei Glorreichen Tage" (Les Trois Glorieuses). König Karl X. wollte die Pressefreiheit abschaffen und das Wahlrecht einschränken. Daraufhin bauten Arbeiter, Studenten und Bürger Barrikaden in den engen Gassen von Paris. Das Gemälde von Eugène Delacroix zeigt diesen Moment des Sturms. Am Ende musste der König fliehen und sein Cousin Louis-Philippe wurde neuer König – er nannte sich "Bürgerkönig", um zu zeigen, dass er für das Volk da ist.',
     points: [
-      'In welchem Jahr und in welcher Stadt spielt die Szene?',
-      'Gegen wen richtet sich der Aufstand der Menschen?',
-      'Was waren die Gründe für den Streit (z.B. Zeitungsverbot)?',
-      'Wie endete dieser Kampf für den König?',
-      'Welche Rolle spielten die Barrikaden in den engen Gassen?'
+      'Was waren die "Drei Glorreichen Tage" im Juli 1830?',
+      'Warum wehrten sich die Menschen gegen König Karl X.?',
+      'Was passierte nach der Flucht des alten Königs?',
+      'Welche Bedeutung hatte die Trikolore in dieser Zeit?',
+      'Wie wurden die Barrikaden aus Möbeln und Steinen genutzt?'
     ],
     sentenceStarters: [
       'Das Bild zeigt die Ereignisse der...',
@@ -79,9 +79,9 @@ export const STEPS: StepData[] = [
       'In dieser Zeit (1830) passierte in Paris...'
     ],
     hints: [
-      'Es geht um die "Drei Glorreichen Tage" im Juli 1830.',
-      'König Karl X. wollte die absolute Macht zurück.',
-      'Die Menschen bauten Mauern aus Möbeln und Steinen (Barrikaden).'
+      'König Karl X. wollte die absolute Macht zurück, wie vor der ersten Revolution 1789.',
+      'Die Menschen bauten über 4000 Barrikaden in der Stadt.',
+      'Delacroix selbst war kein Kämpfer, wollte aber "für sein Vaterland malen".'
     ]
   },
   {
@@ -92,9 +92,9 @@ export const STEPS: StepData[] = [
     description: 'Vergleiche deine Vermutungen aus Schritt 2 mit dem Wissen aus Schritt 3.',
     points: [
       'Stimmten deine ersten Vermutungen mit den Fakten überein?',
-      'Was hast du durch den Text über den Hintergrund neu gelernt?',
-      'Gibt es Details im Bild, die du jetzt besser verstehst?',
-      'Was hat der Maler vielleicht weggelassen oder schöner gemalt?',
+      'Warum ist der Junge links (Vorbild für Gavroche) so wichtig?',
+      'Warum zeigt der Maler die Freiheit barfuß und mit entblößter Brust?',
+      'Was hat der Maler vielleicht weggelassen (z.B. den Gestank oder echten Dreck)?',
       'Ist das Bild eine realistische Darstellung oder eine Helden-Geschichte?'
     ],
     sentenceStarters: [
@@ -105,9 +105,9 @@ export const STEPS: StepData[] = [
       'Jetzt verstehe ich, dass das Symbol der Flagge...'
     ],
     hints: [
-      'Überlege: Ist das Bild wie ein Foto oder eher wie ein Werbeplakat?',
-      'Achte auf die "Heldendarstellung" der Freiheit.',
-      'Manche Dinge sind symbolisch, nicht unbedingt real.'
+      'Die Freiheit ist keine echte Frau, sie ist eine "Idee", die das Volk anführt.',
+      'Der Junge mit den Pistolen symbolisiert die aufmüpfige Jugend von Paris.',
+      'Achte darauf, wie der Maler Licht nutzt, um die Szene dramatisch wirken zu lassen.'
     ]
   },
   {
@@ -118,7 +118,7 @@ export const STEPS: StepData[] = [
     description: 'Gib dein abschließendes Urteil ab. Klicke auf die Ampel!',
     points: [
       'Ist das Bild eine gute Geschichtsquelle oder eher Propaganda?',
-      'Kann man dem Bild glauben, wenn man wissen will, wie es damals war?',
+      'Kann man dem Bild glauben, wenn man wissen will, wie es damals wirklich war?',
       'Welche Farbe gibst du dem Bild für seine Glaubwürdigkeit?',
       'Warum hast du dich für diese Farbe entschieden?',
       'Was müsste man noch wissen, um das Bild voll zu verstehen?'
@@ -131,18 +131,18 @@ export const STEPS: StepData[] = [
       'Insgesamt halte ich die Darstellung für...'
     ],
     hints: [
-      'Rot: Das Bild lügt oder übertreibt extrem.',
-      'Gelb: Es zeigt Wahres, aber sehr einseitig.',
-      'Grün: Es zeigt die Ereignisse sehr neutral und echt (selten bei Kunst!).'
+      'Rot: Das Bild ist fast wie ein Filmplakat – es soll begeistern, nicht neutral informieren.',
+      'Gelb: Es zeigt zwar echte Ereignisse, ist aber eine künstlerische Interpretation.',
+      'Grün: Es ist eine wertvolle Quelle für die "Gefühle" und Ideale der Menschen von 1830.'
     ]
   }
 ];
 
 export const AMPEL_FEEDBACK = {
-  red: "Rot: Du denkst, das Bild ist reine Propaganda. Es macht den grausamen Kampf zu einer schönen Heldengeschichte.",
-  yellow: "Gelb: Gute Wahl! Das Bild zeigt echte Symbole und Ereignisse, aber es ist idealisiert (schöner gemacht).",
-  green: "Grün: Du vertraust dem Maler sehr. Aber denk dran: Jedes Bild hat eine Absicht des Erfinders!"
+  red: "Rot: Du denkst, das Bild ist reine Propaganda. Es macht den grausamen Kampf zu einer schönen Helden-Erzählung und lässt das Leid der Toten fast heldenhaft wirken.",
+  yellow: "Gelb: Gute Wahl! Das Bild zeigt echte Symbole und Ereignisse von 1830, aber es ist stark idealisiert (schöner gemacht), um die Revolution zu feiern.",
+  green: "Grün: Du vertraust dem Maler sehr. Das Bild hilft uns heute zu verstehen, wofür die Menschen damals gestorben sind: Freiheit und Gleichheit!"
 };
 
-export const SOLUTION_TEXT = "Zusammenfassung: Das Bild zeigt die Juli-Revolution 1830. In 5 Schritten haben wir beobachtet (Beschreibung), vermutet (Hypothesen), Fakten gelernt (Kontext), verglichen (Überprüfung) und bewertet (Ampel). Die 'Freiheit' führt das Volk zum Sieg.";
-export const FOOTER_TIP = 'Tipp: Arbeite Schritt für Schritt. Nutze die Detektiv-Lupe, wenn du nicht weiterkommst!';
+export const SOLUTION_TEXT = "Zusammenfassung: Das Gemälde 'Die Freiheit führt das Volk' von Eugène Delacroix entstand direkt nach der Juli-Revolution 1830. Es ist eines der berühmtesten Bilder der Kunstgeschichte und zeigt den Sieg des Volkes über die Willkür des Königs. Die zentrale Figur ist Marianne, die Verkörperung der französischen Republik.";
+export const FOOTER_TIP = 'Tipp: Achte besonders auf den Kontrast zwischen den Toten am Boden und der strahlenden Freiheit in der Mitte!';
