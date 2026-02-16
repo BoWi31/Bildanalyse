@@ -9,13 +9,13 @@ export const STEPS: StepData[] = [
     icon: '📐',
     title: 'Beschreibung',
     subtitle: 'Was kannst du mit deinen Augen sehen?',
-    description: 'Wir suchen zuerst nur Dinge, die man im Bild wirklich sieht. Bleib sachlich!',
+    description: 'Wir suchen zuerst nur Dinge, die man im Bild wirklich sieht. Bleib sachlich und genau!',
     points: [
-      'Was liegt ganz vorne auf dem Boden?',
-      'Wer steht in der Mitte und hält eine Flagge?',
-      'Welches große Gebäude siehst du im Hintergrund?',
-      'Welche Kleidung tragen die verschiedenen Personen?',
-      'Welche Farben und Lichtstimmungen dominieren?'
+      'Was liegt ganz vorne auf dem Boden am unteren Bildrand?',
+      'Wer steht in der Mitte und hält eine Flagge hoch?',
+      'Welches große Gebäude erkennst du im Hintergrund rechts im Nebel?',
+      'Welche unterschiedliche Kleidung tragen die Personen?',
+      'Welche Farben und Lichtstimmungen fallen dir sofort auf?'
     ],
     sentenceStarters: [
       'Auf dem Bild erkenne ich...',
@@ -25,63 +25,63 @@ export const STEPS: StepData[] = [
       'Die Farben wirken eher...'
     ],
     hints: [
-      'Schau ganz unten: Da liegen gefallene Soldaten und Aufständische.',
-      'Die Frau in der Mitte trägt eine rote Mütze (Phrygische Mütze) – ein Symbol für Freiheit.',
-      'Im Hintergrund erkennt man klein die Türme von Notre-Dame in Paris.',
-      'Man sieht einen Jungen mit Pistolen, einen Mann im Zylinder und einen Arbeiter.'
+      'Schau ganz unten: Da liegen gefallene Soldaten des Königs und Aufständische im Schlamm.',
+      'Die Frau trägt eine rote Mütze (Phrygische Mütze) – ein Symbol der antiken Sklavenbefreiung.',
+      'Im Hintergrund erkennt man klein die Türme der Kathedrale Notre-Dame in Paris.',
+      'Man sieht einen Jungen mit Pistolen, einen Mann im Zylinder und einen Arbeiter in Hemdsärmeln.'
     ]
   },
   {
     number: 2,
     icon: '💭',
     title: 'Hypothesen',
-    subtitle: 'Was vermutest du?',
-    description: 'Hier geht es um deine Vermutungen. Was will uns der Maler sagen?',
+    subtitle: 'Was vermutest du über den Inhalt?',
+    description: 'Nutze die Details aus Schritt 1: Was verraten uns Kleidung, Waffen und Symbole über die Geschichte?',
     points: [
-      'Warum ist die Frau in der Mitte so hell beleuchtet?',
-      'Was könnte die Flagge für die Kämpfer bedeuten?',
-      'Warum kämpfen hier so unterschiedliche Menschen zusammen?',
-      'Wer ist wohl der Gegner, gegen den sie stürmen?',
-      'Welches Gefühl soll das Bild beim Betrachter auslösen?'
+      'Welches historische Ereignis wird hier wohl gezeigt?',
+      'Wer kämpft hier gegen wen? Schau auf die Uniformen vs. Alltagskleidung.',
+      'Was verraten uns Zylinder und Arbeitertracht über das Bündnis der Menschen?',
+      'Warum stürmen sie gemeinsam über Barrikaden? Was ist ihr Ziel?',
+      'Welche Bedeutung hat die Trikolore für die Kämpfer in dieser Zeit?'
     ],
     sentenceStarters: [
-      'Ich vermute, die Frau steht für...',
-      'Die Flagge könnte ein Symbol sein für...',
-      'Der Maler will zeigen, dass alle Menschen...',
-      'Ich glaube, das Ziel der Menschen ist...',
-      'Das Bild wirkt auf mich sehr...'
+      'Aufgrund der Kleidung vermute ich, dass hier verschiedene soziale Schichten...',
+      'Das Bündnis aus Bürger (Zylinder) und Arbeiter zeigt wohl...',
+      'Ich glaube, das Ziel des Sturmes ist...',
+      'Die Flagge ist ein Zeichen dafür, dass sie für...',
+      'Die Szene wirkt wie ein Aufstand gegen...'
     ],
     hints: [
-      'Die Frau ist eine "Allegorie" (ein personifiziertes Symbol) für die Freiheit.',
-      'Die Trikolore (Blau-Weiß-Rot) war damals als Flagge eigentlich verboten.',
-      'Dass Arm und Reich gemeinsam kämpfen, ist eine starke politische Botschaft.'
+      'Die Mischung aus "feinen Herren" (Zylinder) und "einfachem Volk" ist ein starker historischer Hinweis.',
+      'Die Barrikaden deuten auf einen Häuserkampf in einer großen Stadt hin.',
+      'Die Trikolore war unter den Bourbonen-Königen verboten – sie zu zeigen ist eine Straftat.'
     ]
   },
   {
     number: 3,
     icon: '🕰️',
     title: 'Historischer Kontext',
-    subtitle: 'Was passiert auf dem Bild?',
-    description: 'Verbinde das Bild mit den geschichtlichen Fakten.',
-    contextText: 'Vom 27. bis 29. Juli 1830 ereigneten sich in Paris die "Drei Glorreichen Tage" (Les Trois Glorieuses). König Karl X. wollte die Pressefreiheit abschaffen und das Wahlrecht einschränken. Daraufhin bauten Arbeiter, Studenten und Bürger Barrikaden in den engen Gassen von Paris. Das Gemälde von Eugène Delacroix zeigt diesen Moment des Sturms. Am Ende musste der König fliehen und sein Cousin Louis-Philippe wurde neuer König – er nannte sich "Bürgerkönig", um zu zeigen, dass er für das Volk da ist.',
+    subtitle: 'Die Juli-Revolution 1830',
+    description: 'Hier findest du die Fakten. Vergleiche sie mit deinen Vermutungen.',
+    contextText: 'Im Juli 1830 erließ König Karl X. die "Juli-Ordonnanzen": Er schaffte die Pressefreiheit ab und änderte das Wahlrecht zu seinen Gunsten. Das Volk von Paris reagierte mit den "Drei Glorreichen Tagen" (27.–29. Juli). Arbeiter, Studenten und Bürger errichteten über 4.000 Barrikaden. Sie kämpften gegen die königliche Garde. Delacroix malte das Bild kurz darauf, um den Sieg des Volkes über die absolute Macht des Königs zu feiern. Karl X. musste fliehen, und Louis-Philippe I., der "Bürgerkönig", bestieg den Thron.',
     points: [
-      'Was waren die "Drei Glorreichen Tage" im Juli 1830?',
-      'Warum wehrten sich die Menschen gegen König Karl X.?',
-      'Was passierte nach der Flucht des alten Königs?',
-      'Welche Bedeutung hatte die Trikolore in dieser Zeit?',
-      'Wie wurden die Barrikaden aus Möbeln und Steinen genutzt?'
+      'Was waren die "Juli-Ordonnanzen" und warum lösten sie Wut aus?',
+      'Warum war das Bündnis zwischen Bürgertum und Arbeitern so entscheidend?',
+      'Wer war Karl X. und warum endete seine Herrschaft?',
+      'Warum wurde Louis-Philippe als "Bürgerkönig" bezeichnet?',
+      'Welche Rolle spielt Delacroix selbst? (Er malte sich evtl. als Mann im Zylinder).'
     ],
     sentenceStarters: [
-      'Das Bild zeigt die Ereignisse der...',
-      'Der historische Hintergrund ist...',
-      'Die Menschen kämpfen gegen...',
-      'Ein wichtiger Grund für den Aufstand war...',
-      'In dieser Zeit (1830) passierte in Paris...'
+      'Ein Auslöser der Revolution war das Verbot der...',
+      'Die "Drei Glorreichen Tage" führten dazu, dass...',
+      'König Karl X. wollte die Zeit zurückdrehen, indem er...',
+      'Das Bild zeigt den Moment, als das Volk...',
+      'Nach der Revolution änderte sich die Herrschaft zu...'
     ],
     hints: [
-      'König Karl X. wollte die absolute Macht zurück, wie vor der ersten Revolution 1789.',
-      'Die Menschen bauten über 4000 Barrikaden in der Stadt.',
-      'Delacroix selbst war kein Kämpfer, wollte aber "für sein Vaterland malen".'
+      'Die Revolution war eine Antwort auf den Versuch, die Ergebnisse von 1789 rückgängig zu machen.',
+      'Barrikaden machten die engen Gassen von Paris für die Kavallerie des Königs unpassierbar.',
+      'Obwohl das Volk siegte, bekam es keine Republik, sondern einen neuen, liberaleren König.'
     ]
   },
   {
@@ -89,25 +89,25 @@ export const STEPS: StepData[] = [
     icon: '🔍',
     title: 'Überprüfung',
     subtitle: 'Überprüfe deine Hypothesen',
-    description: 'Vergleiche deine Vermutungen aus Schritt 2 mit dem Wissen aus Schritt 3.',
+    description: 'Vergleiche deine Vermutungen aus Schritt 2 mit den Fakten aus Schritt 3.',
     points: [
-      'Stimmten deine ersten Vermutungen mit den Fakten überein?',
-      'Warum ist der Junge links (Vorbild für Gavroche) so wichtig?',
-      'Warum zeigt der Maler die Freiheit barfuß und mit entblößter Brust?',
-      'Was hat der Maler vielleicht weggelassen (z.B. den Gestank oder echten Dreck)?',
-      'Ist das Bild eine realistische Darstellung oder eine Helden-Geschichte?'
+      'Welche deiner Vermutungen über die Kämpfer waren historisch korrekt?',
+      'Ist die Frau eine echte Person? (Marianne/Allegorie)',
+      'Warum stellt der Maler die Revolution so "sauber" und heroisch dar?',
+      'Was hat Delacroix im Vergleich zur Realität des Kampfes verändert?',
+      'Wie verändert das Wissen über Karl X. deinen Blick auf das Bild?'
     ],
     sentenceStarters: [
-      'Meine Hypothese aus Schritt 2 war...',
-      'Nachdem ich den Kontext kenne, weiß ich nun...',
-      'Besonders interessant finde ich, dass...',
-      'Der Maler hat die Szene wahrscheinlich so gemalt, weil...',
-      'Jetzt verstehe ich, dass das Symbol der Flagge...'
+      'Ich dachte zuerst, die Frau sei echt, aber nun weiß ich...',
+      'Das Bündnis der Klassen war tatsächlich so, weil...',
+      'Der heroische Stil des Bildes dient dazu...',
+      'Im Vergleich zu den Fakten wirkt das Bild...',
+      'Besonders das Detail der Notre-Dame im Hintergrund bedeutet jetzt...'
     ],
     hints: [
-      'Die Freiheit ist keine echte Frau, sie ist eine "Idee", die das Volk anführt.',
-      'Der Junge mit den Pistolen symbolisiert die aufmüpfige Jugend von Paris.',
-      'Achte darauf, wie der Maler Licht nutzt, um die Szene dramatisch wirken zu lassen.'
+      'Die Freiheit (Marianne) ist eine Allegorie – sie kann keine Kugeln abbekommen.',
+      'Der Junge mit den Pistolen ist die Inspiration für "Gavroche" in Victor Hugos "Les Misérables".',
+      'Propaganda oder Kunst? Delacroix wollte die Begeisterung der Freiheit einfangen.'
     ]
   },
   {
@@ -115,34 +115,34 @@ export const STEPS: StepData[] = [
     icon: '🚦',
     title: 'Unsere Ampelbewertung',
     subtitle: 'Wie bewertest du das Bild? Wieso?',
-    description: 'Gib dein abschließendes Urteil ab. Klicke auf die Ampel!',
+    description: 'Gib dein abschließendes Urteil ab. Wie nützlich ist dieses Bild für Historiker?',
     points: [
-      'Ist das Bild eine gute Geschichtsquelle oder eher Propaganda?',
-      'Kann man dem Bild glauben, wenn man wissen will, wie es damals wirklich war?',
-      'Welche Farbe gibst du dem Bild für seine Glaubwürdigkeit?',
-      'Warum hast du dich für diese Farbe entschieden?',
-      'Was müsste man noch wissen, um das Bild voll zu verstehen?'
+      'Ist das Bild eine objektive Quelle oder politische Werbung (Propaganda)?',
+      'Was lernen wir über die Ideale der Menschen, was wir aus Texten nicht lernen?',
+      'Welche Farbe gibst du dem Bild für seine historische Aussagekraft?',
+      'Warum hast du dich für diese Bewertung entschieden?',
+      'Wem würdest du dieses Bild zeigen, um die Revolution zu erklären?'
     ],
     sentenceStarters: [
       'Ich bewerte das Bild mit der Farbe..., weil...',
-      'Als historische Quelle finde ich das Bild...',
-      'Man muss beachten, dass der Maler...',
-      'Das Bild will uns davon überzeugen, dass...',
-      'Insgesamt halte ich die Darstellung für...'
+      'Als historische Quelle ist das Bild besonders wertvoll für...',
+      'Man muss vorsichtig sein, da das Bild...',
+      'Die emotionale Wirkung des Bildes zeigt uns...',
+      'Insgesamt ist das Gemälde ein Zeugnis für...'
     ],
     hints: [
-      'Rot: Das Bild ist fast wie ein Filmplakat – es soll begeistern, nicht neutral informieren.',
-      'Gelb: Es zeigt zwar echte Ereignisse, ist aber eine künstlerische Interpretation.',
-      'Grün: Es ist eine wertvolle Quelle für die "Gefühle" und Ideale der Menschen von 1830.'
+      'Rot: Das Bild verzerrt die Realität zu stark für eine sachliche Analyse.',
+      'Gelb: Es ist ein wichtiges Zeitdokument, aber man muss die Absicht des Malers kennen.',
+      'Grün: Es ist die perfekte Quelle, um den "Geist" und die Symbole der Freiheit zu verstehen.'
     ]
   }
 ];
 
 export const AMPEL_FEEDBACK = {
-  red: "Rot: Du denkst, das Bild ist reine Propaganda. Es macht den grausamen Kampf zu einer schönen Helden-Erzählung und lässt das Leid der Toten fast heldenhaft wirken.",
-  yellow: "Gelb: Gute Wahl! Das Bild zeigt echte Symbole und Ereignisse von 1830, aber es ist stark idealisiert (schöner gemacht), um die Revolution zu feiern.",
-  green: "Grün: Du vertraust dem Maler sehr. Das Bild hilft uns heute zu verstehen, wofür die Menschen damals gestorben sind: Freiheit und Gleichheit!"
+  red: "Rot: Du siehst das Bild kritisch als heroisierende Propaganda, die den echten Schmutz und das Leid des Straßenkampfes ausblendet.",
+  yellow: "Gelb: Eine differenzierte Sicht! Das Bild vermischt reale Ereignisse von 1830 mit starken Symbolen und Wunschbildern der Freiheit.",
+  green: "Grün: Du betonst den Quellenwert für die Mentalitätsgeschichte – das Bild zeigt perfekt, wofür die Menschen damals bereit waren zu sterben!"
 };
 
-export const SOLUTION_TEXT = "Zusammenfassung: Das Gemälde 'Die Freiheit führt das Volk' von Eugène Delacroix entstand direkt nach der Juli-Revolution 1830. Es ist eines der berühmtesten Bilder der Kunstgeschichte und zeigt den Sieg des Volkes über die Willkür des Königs. Die zentrale Figur ist Marianne, die Verkörperung der französischen Republik.";
-export const FOOTER_TIP = 'Tipp: Achte besonders auf den Kontrast zwischen den Toten am Boden und der strahlenden Freiheit in der Mitte!';
+export const SOLUTION_TEXT = "Zusammenfassung: 'Die Freiheit führt das Volk' (1830) ist das Schlüsselbild der Juli-Revolution. Es zeigt Marianne als Symbol der Freiheit, die ein Bündnis aller sozialen Schichten (Bürger, Arbeiter, Jugend) gegen die Unterdrückung durch Karl X. anführt.";
+export const FOOTER_TIP = 'Tipp: Schau dir noch einmal genau den Mann im Zylinder an – viele glauben, es ist Delacroix selbst!';
