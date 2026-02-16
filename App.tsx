@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { STEPS, SOLUTION_TEXT, INSTRUCTION_HINT, AMPEL_FEEDBACK } from './constants';
 import { Infographic } from './components/Infographic';
 
@@ -8,20 +8,41 @@ export default function App() {
   const [showHints, setShowHints] = useState(false);
   const [showWritingHelp, setShowWritingHelp] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showSolution, setShowSolution] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
   const [ampelChoice, setAmpelChoice] = useState<null | 'red' | 'yellow' | 'green'>(null);
+  const modalImageRef = useRef<HTMLImageElement>(null);
 
   const handlePrint = () => {
     window.print();
   };
 
   const currentStep = STEPS[activeStep];
-  
   const backupUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Eug%C3%A8ne_Delacroix_-_Le_28_Juillet._La_Libert%C3%A9_guidant_le_peuple.jpg/1200px-Eug%C3%A8ne_Delacroix_-_Le_28_Juillet._La_Libert%C3%A9_guidant_le_peuple.jpg";
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = backupUrl;
   };
+
+  // Prevent background scroll when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+      // Reset zoom when opening
+      setIsZoomed(false);
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isModalOpen]);
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsModalOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   useEffect(() => {
     if (activeStep !== 4) {
@@ -39,13 +60,13 @@ export default function App() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </div>
-          <div className="hidden sm:block">
+          <div className="hidden sm:block text-left">
             <h1 className="font-black text-xs md:text-sm tracking-tighter leading-none uppercase text-slate-900">Bildanalyse</h1>
             <p className="text-[7px] md:text-[8px] uppercase font-bold text-slate-400 tracking-widest mt-0.5">Geschichte AB-Hilfe</p>
           </div>
         </div>
 
-        {/* Navigation - Circle Steps like on Worksheet */}
+        {/* Navigation */}
         <div className="flex items-center gap-1.5 md:gap-3 bg-slate-100 p-1.5 md:p-2 rounded-2xl border border-slate-200">
           {STEPS.map((step, idx) => (
             <button
@@ -79,18 +100,50 @@ export default function App() {
         </p>
       </div>
 
-      {/* Image Modal */}
+      {/* Enhanced Image Modal (Lightbox) */}
       {isModalOpen && (
         <div 
-          className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-2"
-          onClick={() => setIsModalOpen(false)}
+          className="fixed inset-0 z-[100] bg-black/95 flex flex-col items-center justify-center overscroll-none"
+          style={{ touchAction: 'none' }} // Prevents mobile reloads/scrolls
         >
-          <img 
-            src={backupUrl} 
-            onError={handleImageError}
-            alt="Bildanalyse Vollbild" 
-            className="max-w-full max-h-full object-contain rounded shadow-2xl"
-          />
+          {/* Modal Header Controls */}
+          <div className="absolute top-4 right-4 flex gap-4 z-[110]">
+             <button 
+              onClick={() => setIsZoomed(!isZoomed)}
+              className="bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-md border border-white/20 transition-all"
+              title="Zoom umschalten"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+              </svg>
+            </button>
+            <button 
+              onClick={() => setIsModalOpen(false)}
+              className="bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-md border border-white/20 transition-all"
+              title="Schließen"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <div 
+            className={`w-full h-full flex items-center justify-center overflow-auto transition-all ${isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}
+            onClick={() => setIsZoomed(!isZoomed)}
+          >
+            <img 
+              ref={modalImageRef}
+              src={backupUrl} 
+              onError={handleImageError}
+              alt="Bildanalyse Vollbild" 
+              className={`max-w-none transition-transform duration-300 ease-out select-none ${isZoomed ? 'scale-[2.5] md:scale-[2]' : 'max-h-[90vh] max-w-[90vw]'}`}
+            />
+          </div>
+          
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/50 px-4 py-2 rounded-full text-white/70 text-xs font-bold uppercase tracking-widest backdrop-blur-sm pointer-events-none">
+            {isZoomed ? 'Verschiebe das Bild zum Erkunden' : 'Klicken zum Zoomen'}
+          </div>
         </div>
       )}
 
@@ -107,7 +160,12 @@ export default function App() {
                 >
                   <img src={backupUrl} onError={handleImageError} alt="Quelle" className="w-full h-auto object-cover" />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                    <span className="bg-white/90 p-4 rounded-full text-indigo-900 shadow-xl font-black uppercase text-xs">Vergrößern</span>
+                    <div className="bg-white/90 p-4 rounded-full text-indigo-900 shadow-xl font-black uppercase text-xs flex items-center gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                      Analysieren
+                    </div>
                   </div>
                 </div>
                 <div className="mt-4 p-4 text-center">
@@ -122,23 +180,23 @@ export default function App() {
           {/* Aufgaben-Sektion */}
           <div className="w-full lg:w-[60%] flex flex-col gap-6">
             <div className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl border border-slate-200">
-               <h3 className="text-xl md:text-2xl font-black italic text-indigo-700 mb-6">
+               <h3 className="text-xl md:text-2xl font-black italic text-indigo-700 mb-6 text-left">
                  "{currentStep.subtitle}"
                </h3>
                
-               <p className="text-lg md:text-xl font-bold text-slate-800 mb-8 leading-tight">
+               <p className="text-lg md:text-xl font-bold text-slate-800 mb-8 leading-tight text-left">
                  {currentStep.description}
                </p>
 
                {currentStep.contextText && (
-                 <div className="bg-indigo-900 text-white p-6 rounded-2xl mb-8 border-l-[10px] border-indigo-400">
+                 <div className="bg-indigo-900 text-white p-6 rounded-2xl mb-8 border-l-[10px] border-indigo-400 text-left">
                    <p className="font-bold italic text-lg leading-relaxed">{currentStep.contextText}</p>
                  </div>
                )}
 
                <div className="space-y-4 mb-10">
                  {currentStep.points.map((point, i) => (
-                   <div key={i} className="flex items-start gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                   <div key={i} className="flex items-start gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors text-left">
                       <span className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center font-black flex-shrink-0">{i+1}</span>
                       <p className="text-base md:text-lg font-bold text-slate-900 leading-tight">{point}</p>
                    </div>
@@ -166,7 +224,7 @@ export default function App() {
                     <span>{showHints ? '▲' : '▼'}</span>
                  </button>
                  {showHints && (
-                   <div className="bg-amber-50 p-6 rounded-2xl border-2 border-amber-200 space-y-3">
+                   <div className="bg-amber-50 p-6 rounded-2xl border-2 border-amber-200 space-y-3 text-left">
                      {currentStep.hints.map((h, i) => <p key={i} className="font-bold text-amber-900">★ {h}</p>)}
                    </div>
                  )}
@@ -176,7 +234,7 @@ export default function App() {
                     <span>{showWritingHelp ? '▲' : '▼'}</span>
                  </button>
                  {showWritingHelp && (
-                   <div className="bg-indigo-50 p-6 rounded-2xl border-2 border-indigo-200 space-y-3">
+                   <div className="bg-indigo-50 p-6 rounded-2xl border-2 border-indigo-200 space-y-3 text-left">
                      {currentStep.sentenceStarters.map((s, i) => <p key={i} className="font-bold text-indigo-900 italic leading-tight">„{s}“</p>)}
                    </div>
                  )}
