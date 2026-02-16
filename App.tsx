@@ -27,7 +27,6 @@ export default function App() {
   useEffect(() => {
     if (isModalOpen) {
       document.body.style.overflow = 'hidden';
-      // Reset zoom when opening
       setIsZoomed(false);
     } else {
       document.body.style.overflow = 'unset';
@@ -100,18 +99,17 @@ export default function App() {
         </p>
       </div>
 
-      {/* Enhanced Image Modal (Lightbox) */}
+      {/* Image Modal (Lightbox) */}
       {isModalOpen && (
         <div 
           className="fixed inset-0 z-[100] bg-black/95 flex flex-col items-center justify-center overscroll-none"
-          style={{ touchAction: 'none' }} // Prevents mobile reloads/scrolls
+          style={{ touchAction: 'none' }}
         >
           {/* Modal Header Controls */}
           <div className="absolute top-4 right-4 flex gap-4 z-[110]">
              <button 
               onClick={() => setIsZoomed(!isZoomed)}
               className="bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-md border border-white/20 transition-all"
-              title="Zoom umschalten"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
@@ -120,7 +118,6 @@ export default function App() {
             <button 
               onClick={() => setIsModalOpen(false)}
               className="bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-md border border-white/20 transition-all"
-              title="Schließen"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
@@ -169,7 +166,7 @@ export default function App() {
                   </div>
                 </div>
                 <div className="mt-4 p-4 text-center">
-                   <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest block mb-1">Aktueller Arbeitsschritt</span>
+                   <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest block mb-1">Arbeitsschritt</span>
                    <h2 className="text-2xl font-black text-indigo-900 uppercase tracking-tight">
                      {currentStep.number}. {currentStep.title}
                    </h2>
@@ -190,6 +187,9 @@ export default function App() {
 
                {currentStep.contextText && (
                  <div className="bg-indigo-900 text-white p-6 rounded-2xl mb-8 border-l-[10px] border-indigo-400 text-left">
+                   <div className="flex items-center gap-2 mb-2">
+                     <span className="bg-white/20 px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider">Hintergrund-Wissen</span>
+                   </div>
                    <p className="font-bold italic text-lg leading-relaxed">{currentStep.contextText}</p>
                  </div>
                )}
@@ -206,20 +206,20 @@ export default function App() {
                {/* Step 5 Ampel-Logik */}
                {activeStep === 4 && (
                  <div className="bg-slate-900 p-8 rounded-[2rem] shadow-2xl border-4 border-slate-800 mb-10">
-                    <h4 className="text-white font-black uppercase text-center text-xs tracking-widest mb-6">Wähle die passende Farbe für das AB:</h4>
+                    <h4 className="text-white font-black uppercase text-center text-xs tracking-widest mb-6">Wie bewertest du die Quelle für dein AB?</h4>
                     <div className="flex justify-center gap-6">
-                       <button onClick={() => setAmpelChoice('red')} className={`w-14 h-14 md:w-16 md:h-16 rounded-full bg-red-600 border-4 ${ampelChoice === 'red' ? 'border-white scale-110 shadow-lg' : 'border-transparent opacity-40'}`} />
-                       <button onClick={() => setAmpelChoice('yellow')} className={`w-14 h-14 md:w-16 md:h-16 rounded-full bg-yellow-400 border-4 ${ampelChoice === 'yellow' ? 'border-white scale-110 shadow-lg' : 'border-transparent opacity-40'}`} />
-                       <button onClick={() => setAmpelChoice('green')} className={`w-14 h-14 md:w-16 md:h-16 rounded-full bg-green-500 border-4 ${ampelChoice === 'green' ? 'border-white scale-110 shadow-lg' : 'border-transparent opacity-40'}`} />
+                       <button onClick={() => setAmpelChoice('red')} className={`w-14 h-14 md:w-16 md:h-16 rounded-full bg-red-600 border-4 transition-all hover:scale-105 ${ampelChoice === 'red' ? 'border-white scale-110 shadow-lg' : 'border-transparent opacity-40'}`} />
+                       <button onClick={() => setAmpelChoice('yellow')} className={`w-14 h-14 md:w-16 md:h-16 rounded-full bg-yellow-400 border-4 transition-all hover:scale-105 ${ampelChoice === 'yellow' ? 'border-white scale-110 shadow-lg' : 'border-transparent opacity-40'}`} />
+                       <button onClick={() => setAmpelChoice('green')} className={`w-14 h-14 md:w-16 md:h-16 rounded-full bg-green-500 border-4 transition-all hover:scale-105 ${ampelChoice === 'green' ? 'border-white scale-110 shadow-lg' : 'border-transparent opacity-40'}`} />
                     </div>
                     {ampelChoice && (
-                      <p className="mt-6 text-indigo-300 font-bold text-center italic text-lg">{AMPEL_FEEDBACK[ampelChoice]}</p>
+                      <p className="mt-6 text-indigo-300 font-bold text-center italic text-lg animate-pulse">{AMPEL_FEEDBACK[ampelChoice]}</p>
                     )}
                  </div>
                )}
 
                <div className="flex flex-col gap-4">
-                 <button onClick={() => setShowHints(!showHints)} className="w-full p-6 bg-amber-400 hover:bg-amber-500 rounded-2xl font-black uppercase text-amber-950 flex items-center justify-between shadow-lg">
+                 <button onClick={() => setShowHints(!showHints)} className="w-full p-6 bg-amber-400 hover:bg-amber-500 rounded-2xl font-black uppercase text-amber-950 flex items-center justify-between shadow-lg transition-transform active:scale-95">
                     <span className="flex items-center gap-3">🔍 Detektiv-Lupe</span>
                     <span>{showHints ? '▲' : '▼'}</span>
                  </button>
@@ -229,7 +229,7 @@ export default function App() {
                    </div>
                  )}
 
-                 <button onClick={() => setShowWritingHelp(!showWritingHelp)} className="w-full p-6 bg-indigo-600 hover:bg-indigo-700 rounded-2xl font-black uppercase text-white flex items-center justify-between shadow-lg">
+                 <button onClick={() => setShowWritingHelp(!showWritingHelp)} className="w-full p-6 bg-indigo-600 hover:bg-indigo-700 rounded-2xl font-black uppercase text-white flex items-center justify-between shadow-lg transition-transform active:scale-95">
                     <span className="flex items-center gap-3">✍️ Schreib-Hilfe</span>
                     <span>{showWritingHelp ? '▲' : '▼'}</span>
                  </button>
@@ -244,19 +244,19 @@ export default function App() {
                   <button 
                     disabled={activeStep === 0} 
                     onClick={() => { setActiveStep(a => a - 1); setShowHints(false); setShowWritingHelp(false); }}
-                    className="px-6 md:px-10 py-4 bg-slate-200 text-slate-500 rounded-2xl font-black uppercase disabled:opacity-20"
+                    className="px-6 md:px-10 py-4 bg-slate-200 text-slate-500 rounded-2xl font-black uppercase disabled:opacity-20 transition-all hover:bg-slate-300"
                   >
                     Zurück
                   </button>
                   {activeStep < 4 ? (
                     <button 
                       onClick={() => { setActiveStep(a => a + 1); setShowHints(false); setShowWritingHelp(false); }}
-                      className="px-6 md:px-10 py-4 bg-indigo-600 text-white rounded-2xl font-black uppercase shadow-lg"
+                      className="px-6 md:px-10 py-4 bg-indigo-600 text-white rounded-2xl font-black uppercase shadow-lg transition-all hover:bg-indigo-700"
                     >
                       Weiter
                     </button>
                   ) : (
-                    <button onClick={handlePrint} className="px-6 md:px-10 py-4 bg-green-600 text-white rounded-2xl font-black uppercase shadow-lg">
+                    <button onClick={handlePrint} className="px-6 md:px-10 py-4 bg-green-600 text-white rounded-2xl font-black uppercase shadow-lg transition-all hover:bg-green-700">
                       AB Drucken
                     </button>
                   )}
