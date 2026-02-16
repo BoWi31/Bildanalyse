@@ -1,157 +1,148 @@
 
 import { StepData } from './types';
 
-export const INSTRUCTION_HINT = "WICHTIG: Bitte schreibe deine Ergebnisse und Gedanken in dein Heft oder auf ein Blatt Papier!";
+export const INSTRUCTION_HINT = "WICHTIG: Bitte schreibe deine Ergebnisse und Gedanken in dein Heft oder auf das Arbeitsblatt!";
 
 export const STEPS: StepData[] = [
   {
     number: 1,
     icon: '📐',
-    title: 'WAS SEHT IHR?',
-    subtitle: 'Wo seht ihr das?',
-    description: 'Wir suchen zuerst nur Dinge, die man im Bild mit den Augen finden kann. Schau genau hin!',
+    title: 'Beschreibung',
+    subtitle: 'Was kannst du mit deinen Augen sehen?',
+    description: 'Wir suchen zuerst nur Dinge, die man im Bild wirklich sieht. Bleib sachlich!',
     points: [
-      'Was liegt ganz vorne (unten) auf dem Boden?',
-      'Wer steht genau in der Mitte und hält eine Flagge?',
-      'Was hält der Junge auf der rechten Seite in den Händen?',
-      'Welches große Gebäude siehst du hinten rechts im Rauch?',
-      'Welche Farben hat die große Flagge in der Luft?'
+      'Was liegt ganz vorne auf dem Boden?',
+      'Wer steht in der Mitte und hält eine Flagge?',
+      'Welches große Gebäude siehst du im Hintergrund?',
+      'Welche Kleidung tragen die verschiedenen Personen?',
+      'Welche Farben und Lichtstimmungen dominieren?'
     ],
     sentenceStarters: [
-      'Ganz vorne am Boden sehe ich...',
-      'In der Mitte steht eine Frau, die...',
-      'Der Junge auf der rechten Seite hält...',
-      'Im Hintergrund erkennt man...',
-      'Die Flagge hat die Farben...'
+      'Auf dem Bild erkenne ich...',
+      'Im Vordergrund sieht man...',
+      'In der Mitte befindet sich...',
+      'Auffällig ist die Kleidung von...',
+      'Die Farben wirken eher...'
     ],
     hints: [
       'Schau ganz unten: Da liegen tote Männer.',
-      'Die Frau in der Mitte trägt ein helles Kleid.',
-      'Der Junge hat zwei Pistolen.',
-      'Die Kirche hinten heißt Notre-Dame.',
-      'Die Flagge ist Blau, Weiß und Rot.'
+      'Die Frau in der Mitte trägt ein helles Kleid und eine rote Mütze.',
+      'Im Hintergrund erkennt man die Türme von Notre-Dame.',
+      'Man sieht reiche Bürger mit Zylindern und arme Arbeiter.'
     ]
   },
   {
     number: 2,
-    icon: '🧩',
-    title: 'WER IST ZU SEHEN?',
-    subtitle: 'Kleidung und Gegenstände',
-    description: 'Jetzt schauen wir uns die Personen genauer an. Wer kämpft hier eigentlich gemeinsam?',
+    icon: '💭',
+    title: 'Hypothesen',
+    subtitle: 'Was vermutest du?',
+    description: 'Hier geht es um deine Vermutungen. Was will uns der Maler sagen?',
     points: [
-      'Was trägt der Mann mit dem hohen schwarzen Hut (Zylinder)?',
-      'Wie sieht die Kleidung der Frau in der Mitte aus?',
-      'Was für Waffen haben die verschiedenen Leute (Gewehre, Säbel)?',
-      'Was tragen die Menschen auf dem Kopf (Mützen, Hüte)?',
-      'Wie schauen die Gesichter der Kämpfer aus (mutig, wild)?'
+      'Warum ist die Frau in der Mitte so hell beleuchtet?',
+      'Was könnte die Flagge für die Kämpfer bedeuten?',
+      'Warum kämpfen hier so unterschiedliche Menschen zusammen?',
+      'Wer ist wohl der Gegner, gegen den sie stürmen?',
+      'Welches Gefühl soll das Bild beim Betrachter auslösen?'
     ],
     sentenceStarters: [
-      'Der Mann mit dem Zylinder trägt...',
-      'Die Frau in der Mitte wirkt...',
-      'Ich sehe verschiedene Waffen, wie...',
-      'An den Hüten erkenne ich, dass...',
-      'Die Gesichter der Personen sehen... aus.'
+      'Ich vermute, die Frau steht für...',
+      'Die Flagge könnte ein Symbol sein für...',
+      'Der Maler will zeigen, dass alle Menschen...',
+      'Ich glaube, das Ziel der Menschen ist...',
+      'Das Bild wirkt auf mich sehr...'
     ],
     hints: [
-      'Der Mann mit dem Zylinder sieht aus wie ein reicher Bürger.',
-      'Die Frau trägt eine rote Mütze (Freiheitsmütze).',
-      'Es gibt Gewehre mit Bajonetten (Messern vorne dran).',
-      'Man sieht einfache Arbeiter und reiche Leute zusammen.',
-      'Alle stürmen gemeinsam nach vorne.'
+      'Die Frau ist wahrscheinlich kein echter Mensch, sondern ein Symbol (Freiheit).',
+      'Die Flagge steht für die Nation Frankreich.',
+      'Das Zusammenstehen zeigt Einigkeit gegen einen gemeinsamen Feind.'
     ]
   },
   {
     number: 3,
-    icon: '💭',
-    title: 'WAS BEDEUTET DAS?',
-    subtitle: 'Vermutungen und Ideen',
-    description: 'Das Bild ist wie eine Geschichte. Warum hat der Maler die Leute genau so gemalt?',
+    icon: '🕰️',
+    title: 'Historischer Kontext',
+    subtitle: 'Was passiert auf dem Bild?',
+    description: 'Verbinde das Bild mit den geschichtlichen Fakten.',
+    contextText: 'Im Juli 1830 gab es in Paris einen Aufstand (Juli-Revolution). Das Volk kämpfte gegen König Karl X., der die Pressefreiheit einschränkte. Das Bild zeigt den Moment, in dem die Menschen die Barrikaden stürmen.',
     points: [
-      'Warum ist die Frau in der Mitte so viel heller als der Rest?',
-      'Warum kämpfen reiche und arme Menschen hier zusammen?',
-      'Was könnte die erhobene Flagge für die Kämpfer bedeuten?',
-      'Warum sind manche Soldaten am Boden fast nackt?',
-      'Warum stürmen alle Leute in die gleiche Richtung?'
+      'In welchem Jahr und in welcher Stadt spielt die Szene?',
+      'Gegen wen richtet sich der Aufstand der Menschen?',
+      'Was waren die Gründe für den Streit (z.B. Zeitungsverbot)?',
+      'Wie endete dieser Kampf für den König?',
+      'Welche Rolle spielten die Barrikaden in den engen Gassen?'
     ],
     sentenceStarters: [
-      'Ich vermute, die Frau leuchtet so hell, weil...',
-      'Der Maler will zeigen, dass alle Leute...',
-      'Die Flagge ist ein Symbol für...',
-      'Dass Soldaten am Boden liegen, bedeutet...',
-      'Alle stürmen nach vorne, um zu zeigen...'
+      'Das Bild zeigt die Ereignisse der...',
+      'Der historische Hintergrund ist...',
+      'Die Menschen kämpfen gegen...',
+      'Ein wichtiger Grund für den Aufstand war...',
+      'In dieser Zeit (1830) passierte in Paris...'
     ],
     hints: [
-      'Die Frau ist ein Symbol für die Freiheit.',
-      'Es kämpfen Bürger und Arbeiter für das gleiche Ziel.',
-      'Die Flagge steht für Hoffnung und das Land Frankreich.',
-      'Die Toten am Boden zeigen, wie schlimm der Kampf war.',
-      'Die Richtung zeigt: Es geht in eine neue Zukunft.'
+      'Es geht um die "Drei Glorreichen Tage" im Juli 1830.',
+      'König Karl X. wollte die absolute Macht zurück.',
+      'Die Menschen bauten Mauern aus Möbeln und Steinen (Barrikaden).'
     ]
   },
   {
     number: 4,
-    icon: '🕰️',
-    title: 'DER HINTERGRUND',
-    subtitle: 'Warum gab es Streit?',
-    description: 'Hier erfährst du, was damals in Paris wirklich los war.',
-    contextText: 'Stell dir vor, du lebst im Jahr 1830 in Paris. Der König, Karl X., will die totale Macht. Er verbietet plötzlich alle Zeitungen, damit niemand ihn kritisieren kann. Das ist der Funke! Die Menschen in Paris – egal ob arm oder reich – halten zusammen. Sie reißen das Pflaster aus den Straßen und bauen riesige Mauern aus Steinen und Möbeln, die "Barrikaden". Drei Tage lang (27. bis 29. Juli) tobt ein heftiger Kampf in den engen Gassen gegen die Soldaten des Königs. Über 600 Menschen sterben, aber das Volk siegt! Der König bekommt Angst und flieht nach England. Die Menschen feiern ihren Sieg für die Freiheit und bekommen einen neuen König, der verspricht, sich an die Gesetze zu halten.',
+    icon: '🔍',
+    title: 'Überprüfung',
+    subtitle: 'Überprüfe deine Hypothesen',
+    description: 'Vergleiche deine Vermutungen aus Schritt 2 mit dem Wissen aus Schritt 3.',
     points: [
-      'Warum war das Verbot von Zeitungen so schlimm?',
-      'Aus was bauten die Leute ihre Schutzmauern (Barrikaden)?',
-      'Welche Gruppen von Menschen hielten im Kampf zusammen?',
-      'Wie lange dauerten die Kämpfe in Paris?',
-      'Wohin verschwand der König nach seiner Niederlage?'
+      'Stimmten deine ersten Vermutungen mit den Fakten überein?',
+      'Was hast du durch den Text über den Hintergrund neu gelernt?',
+      'Gibt es Details im Bild, die du jetzt besser verstehst?',
+      'Was hat der Maler vielleicht weggelassen oder schöner gemalt?',
+      'Ist das Bild eine realistische Darstellung oder eine Helden-Geschichte?'
     ],
     sentenceStarters: [
-      'Das Zeitungsverbot war schlimm, weil...',
-      'Die Barrikaden bestanden aus...',
-      'Es hielten verschiedene Menschen zusammen, zum Beispiel...',
-      'Die Kämpfe dauerten insgesamt...',
-      'Nach dem Sieg des Volkes floh der König nach...'
+      'Meine Hypothese aus Schritt 2 war...',
+      'Nachdem ich den Kontext kenne, weiß ich nun...',
+      'Besonders interessant finde ich, dass...',
+      'Der Maler hat die Szene wahrscheinlich so gemalt, weil...',
+      'Jetzt verstehe ich, dass das Symbol der Flagge...'
     ],
     hints: [
-      'Ohne Zeitungen gibt es keine freie Meinung mehr.',
-      'Man nutzte Pflastersteine und Möbel für die Barrikaden.',
-      'Reiche Bürger und arme Arbeiter kämpften Seite an Seite.',
-      'Man nennt diese Zeit auch die "Drei Glorreichen Tage".',
-      'König Karl X. floh ins Exil nach Großbritannien.'
+      'Überlege: Ist das Bild wie ein Foto oder eher wie ein Werbeplakat?',
+      'Achte auf die "Heldendarstellung" der Freiheit.',
+      'Manche Dinge sind symbolisch, nicht unbedingt real.'
     ]
   },
   {
     number: 5,
     icon: '🚦',
-    title: 'DIE BEWERTUNG',
-    subtitle: 'Glauben wir dem Bild?',
-    description: 'Prüfe das Bild jetzt kritisch. Klicke unten auf die Ampelfarbe, die am besten passt!',
+    title: 'Unsere Ampelbewertung',
+    subtitle: 'Wie bewertest du das Bild? Wieso?',
+    description: 'Gib dein abschließendes Urteil ab. Klicke auf die Ampel!',
     points: [
-      'Zeigt das Bild die echte Gewalt oder wirkt es eher wie ein Heldendrama?',
-      'Warum malte Delacroix die Freiheit als starke Frau ohne Hemd?',
-      'Fehlen im Bild vielleicht die schmutzigen und grausamen Seiten des Krieges?',
-      'Ist das Bild neutral oder will es uns von der Revolution überzeugen?',
-      'Klicke auf deine Wahl: Grün, Gelb oder Rot?'
+      'Ist das Bild eine gute Geschichtsquelle oder eher Propaganda?',
+      'Kann man dem Bild glauben, wenn man wissen will, wie es damals war?',
+      'Welche Farbe gibst du dem Bild für seine Glaubwürdigkeit?',
+      'Warum hast du dich für diese Farbe entschieden?',
+      'Was müsste man noch wissen, um das Bild voll zu verstehen?'
     ],
     sentenceStarters: [
-      'Das Bild wirkt auf mich eher wie...',
-      'Die Darstellung der Freiheit soll zeigen, dass...',
-      'Ich denke, der Maler hat weggelassen, dass...',
-      'Das Ziel des Bildes ist es wahrscheinlich...',
-      'Ich entscheide mich für die Ampelfarbe...'
+      'Ich bewerte das Bild mit der Farbe..., weil...',
+      'Als historische Quelle finde ich das Bild...',
+      'Man muss beachten, dass der Maler...',
+      'Das Bild will uns davon überzeugen, dass...',
+      'Insgesamt halte ich die Darstellung für...'
     ],
     hints: [
-      'Der Maler war ein Anhänger der Revolution, er war nicht neutral.',
-      'Das Bild ist "idealisiert" – es macht alles schöner und stolzer.',
-      'Die Frau ist eine "Allegorie" (ein personifiziertes Symbol).',
-      'In der Geschichte muss man Quellen immer hinterfragen.',
-      'Tipp: Ist ein Werbeplakat für die Freiheit 100% objektiv?'
+      'Rot: Das Bild lügt oder übertreibt extrem.',
+      'Gelb: Es zeigt Wahres, aber sehr einseitig.',
+      'Grün: Es zeigt die Ereignisse sehr neutral und echt (selten bei Kunst!).'
     ]
   }
 ];
 
 export const AMPEL_FEEDBACK = {
-  red: "Rot? Nicht ganz. Das Bild ist zwar parteiisch (Propaganda), aber es zeigt ein echtes historisches Ereignis. Es ist nicht komplett gelogen, zeigt aber nur eine Seite.",
-  yellow: "Richtig! Gelb ist die beste Wahl. Das Bild zeigt zwar die Wahrheit über den Aufstand, aber es übertreibt auch maßlos und macht alles heldenhafter, als es war. Man muss es kritisch prüfen!",
-  green: "Grün? Sei vorsichtig! Das Bild ist kein Foto. Der Maler wollte die Revolution feiern und hat vieles erfunden oder verschönert. Es ist keine ganz neutrale Quelle."
+  red: "Rot: Du denkst, das Bild ist reine Propaganda. Es macht den grausamen Kampf zu einer schönen Heldengeschichte.",
+  yellow: "Gelb: Gute Wahl! Das Bild zeigt echte Symbole und Ereignisse, aber es ist idealisiert (schöner gemacht).",
+  green: "Grün: Du vertraust dem Maler sehr. Aber denk dran: Jedes Bild hat eine Absicht des Erfinders!"
 };
 
-export const SOLUTION_TEXT = "Zusammenfassung: Das Bild 'Die Freiheit führt das Volk' von Eugène Delacroix zeigt die Juli-Revolution von 1830 in Paris. Die Frau in der Mitte ist 'Liberté' (die Freiheit). Sie ist kein echter Mensch, sondern ein Symbol. Sie führt verschiedene soziale Schichten (Bürger, Arbeiter, Kinder) zum Sieg gegen die Herrschaft des Königs. Das Bild ist idealisiert, das heißt, es macht den Kampf schöner und heldenhafter, als er in echt war.";
-export const FOOTER_TIP = 'Tipp: Erst beschreiben (Beweise im Bild), dann Vermutungen, danach den Kontext klären – und am Ende mit der Ampel abschließen.';
+export const SOLUTION_TEXT = "Zusammenfassung: Das Bild zeigt die Juli-Revolution 1830. In 5 Schritten haben wir beobachtet (Beschreibung), vermutet (Hypothesen), Fakten gelernt (Kontext), verglichen (Überprüfung) und bewertet (Ampel). Die 'Freiheit' führt das Volk zum Sieg.";
+export const FOOTER_TIP = 'Tipp: Arbeite Schritt für Schritt. Nutze die Detektiv-Lupe, wenn du nicht weiterkommst!';
